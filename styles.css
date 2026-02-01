@@ -1,0 +1,334 @@
+/* 기본 스타일 리셋 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #000011;
+    color: #fff;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+#canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* 정보 패널 (왼쪽 상단) */
+#info-panel {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    background: linear-gradient(135deg, rgba(20, 20, 50, 0.9), rgba(10, 10, 30, 0.95));
+    backdrop-filter: blur(10px);
+    padding: 25px 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(100, 150, 255, 0.3);
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    max-width: 320px;
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+#info-panel h1 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, #fff, #88ccff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(100, 180, 255, 0.5);
+}
+
+#planet-info {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* 컨트롤 패널 (오른쪽 상단) */
+#controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    background: linear-gradient(135deg, rgba(20, 20, 50, 0.9), rgba(10, 10, 30, 0.95));
+    backdrop-filter: blur(10px);
+    padding: 20px 25px;
+    border-radius: 20px;
+    border: 1px solid rgba(100, 150, 255, 0.3);
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: slideIn 0.5s ease-out 0.1s backwards;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.control-group:last-child {
+    margin-bottom: 0;
+}
+
+.control-group label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    min-width: 100px;
+}
+
+#speed-slider {
+    width: 120px;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: linear-gradient(90deg, #334, #446);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+}
+
+#speed-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(135deg, #6af, #48f);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(100, 170, 255, 0.6);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#speed-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 25px rgba(100, 170, 255, 0.9);
+}
+
+#speed-value {
+    font-size: 0.9rem;
+    color: #6af;
+    min-width: 35px;
+    font-weight: 600;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #6af;
+}
+
+/* 행성 선택 버튼 (하단 중앙) */
+#planet-buttons {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 90%;
+    animation: slideUp 0.5s ease-out 0.2s backwards;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+#planet-buttons button {
+    background: linear-gradient(135deg, rgba(30, 30, 60, 0.9), rgba(20, 20, 40, 0.95));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(100, 150, 255, 0.3);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+#planet-buttons button:hover {
+    background: linear-gradient(135deg, rgba(50, 50, 100, 0.95), rgba(30, 30, 70, 0.98));
+    border-color: rgba(100, 170, 255, 0.6);
+    transform: translateY(-3px);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(100, 170, 255, 0.3);
+}
+
+#planet-buttons button:active {
+    transform: translateY(-1px);
+}
+
+#planet-buttons button.active {
+    background: linear-gradient(135deg, #48f, #28c);
+    border-color: #6af;
+    box-shadow: 
+        0 4px 20px rgba(100, 170, 255, 0.5),
+        0 0 30px rgba(100, 170, 255, 0.3);
+}
+
+/* 로딩 화면 */
+#loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000011;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease;
+}
+
+#loading.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader {
+    width: 80px;
+    height: 80px;
+    border: 4px solid rgba(100, 170, 255, 0.2);
+    border-top-color: #6af;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+#loading p {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    #info-panel {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        max-width: none;
+        padding: 15px 20px;
+    }
+    
+    #info-panel h1 {
+        font-size: 1.4rem;
+    }
+    
+    #controls {
+        top: auto;
+        bottom: 120px;
+        right: 10px;
+        left: 10px;
+        padding: 15px;
+    }
+    
+    .control-group {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    #planet-buttons {
+        bottom: 15px;
+        gap: 8px;
+    }
+    
+    #planet-buttons button {
+        padding: 10px 15px;
+        font-size: 0.8rem;
+    }
+}
+
+/* 별 배경 효과 */
+.star {
+    position: fixed;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+/* 행성 정보 스타일 */
+.planet-detail {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(100, 150, 255, 0.2);
+}
+
+.planet-detail h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: #6af;
+}
+
+.planet-detail p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.planet-stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(100, 150, 255, 0.1);
+}
+
+.planet-stat:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.stat-value {
+    color: #8cf;
+    font-weight: 500;
+}
